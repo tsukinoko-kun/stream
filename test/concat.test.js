@@ -9,6 +9,10 @@ test("SequentialStream::concat", () => {
             .concat(SequentialStream.of(arr2))
             .toArray()
     ).toEqual([...arr1, ...arr2])
+
+    expect(
+        SequentialStream.of(arr1).concat().toArray()
+    ).toEqual(arr1)
 })
 
 test("AsyncStream::concat", async () => {
@@ -20,4 +24,8 @@ test("AsyncStream::concat", async () => {
             .concat(AsyncStream.of(arr2))
             .toArrayAsync())
     ).toEqual([...arr1, ...arr2])
+
+    expect(
+        (await AsyncStream.of(arr1).concat().toArrayAsync())
+    ).toEqual(arr1)
 })

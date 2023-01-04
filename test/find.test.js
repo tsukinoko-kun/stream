@@ -8,6 +8,10 @@ test("SequentialStream::find", () => {
             .find((x) => x % 2 === 0)
             .unwrap()
     ).toEqual(4)
+
+    expect(
+        SequentialStream.empty().find((x) => x % 2 === 0).isNone
+    ).toEqual(true)
 })
 
 test("AsyncStream::findAsync", async () => {
@@ -16,4 +20,8 @@ test("AsyncStream::findAsync", async () => {
     expect(
         (await AsyncStream.of(arr).findAsync((x) => x % 2 === 0)).unwrap()
     ).toEqual(4)
+
+    expect(
+        (await AsyncStream.of([]).findAsync((x) => x % 2 === 0)).isNone
+    ).toEqual(true)
 })

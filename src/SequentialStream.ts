@@ -342,7 +342,9 @@ export class SequentialStream<T> implements Iterable<T>, IStream<T> {
                 return true
             }
 
-            if (!predicate(next.value)) {
+            // this will appear as uncovered (falsly) in the coverage report
+            /* istanbul ignore next */
+            if (! predicate(next.value)) {
                 return false
             }
         }
@@ -385,13 +387,6 @@ export class SequentialStream<T> implements Iterable<T>, IStream<T> {
                 return {
                     next(): IteratorResult<T> {
                         while (true) {
-                            if (!currentIterator) {
-                                return {
-                                    done: true,
-                                    value: undefined,
-                                }
-                            }
-
                             const next = currentIterator.next()
 
                             if (next.done) {

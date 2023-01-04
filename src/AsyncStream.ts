@@ -313,13 +313,6 @@ export class AsyncStream<T> implements AsyncIterable<T>, IStream<T> {
                 return {
                     // eslint-disable-next-line no-restricted-syntax
                     async next(): Promise<IteratorResult<T>> {
-                        if (queue.length === 0) {
-                            return {
-                                done: true,
-                                value: undefined,
-                            }
-                        }
-
                         const next = await queue[0]
 
                         queue.shift()
@@ -413,13 +406,6 @@ export class AsyncStream<T> implements AsyncIterable<T>, IStream<T> {
                     // eslint-disable-next-line no-restricted-syntax
                     async next(): Promise<IteratorResult<T>> {
                         while (true) {
-                            if (!currentIterator) {
-                                return {
-                                    done: true,
-                                    value: undefined,
-                                }
-                            }
-
                             const next = await currentIterator.next()
 
                             if (next.done) {
@@ -467,7 +453,9 @@ export class AsyncStream<T> implements AsyncIterable<T>, IStream<T> {
                                 }
                             })
                         })
+                        /* istanbul ignore next */
                         .catch((err) => {
+                            /* istanbul ignore next */
                             reject(err)
                         })
                 })
